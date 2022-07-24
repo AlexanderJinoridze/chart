@@ -1,17 +1,17 @@
 {
-  "name": "telegram-contest-sources",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "serve": "parcel ./src/index.html -p 5500",
-    "build": "parcel build ./src/index.html"
-  },
-  "keywords": [],
-  "author": "Alexander <jinoridzealexander@gmail.com>",
-  "license": "ISC",
-  "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-beta.2",
-    "parcel": "*"
-  }
+    "name": "chart",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "serve": "parcel ./src/index.html -p 5500",
+        "build": "parcel build ./src/index.html"
+    },
+    "keywords": [],
+    "author": "Alexander <jinoridzealexander@gmail.com>",
+    "license": "ISC",
+    "devDependencies": {
+        "@parcel/transformer-sass": "^2.0.0-beta.2",
+        "parcel": "*"
+    }
 }

@@ -30,7 +30,7 @@ export function checkBoxes(root, data){
             <span>${ data.names[key] }</span>
         `;
         let checkBox = document.createElement("div");
-        checkBox.classList.add("tg-chart-checkbox");
+        checkBox.classList.add("chart-checkbox");
         checkBox.innerHTML = template;
 
         checkBox.addEventListener("click",checkBoxClick);

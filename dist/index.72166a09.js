@@ -448,12 +448,12 @@ var _dataJson = require("./data.json");
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 var _dataJsonDefault = _parcelHelpers.interopDefault(_dataJson);
 require("./styles.scss");
-_chart.chart(document.getElementById("chart1"), _dataJsonDefault.default[0]).init();
-_chart.chart(document.getElementById("chart2"), _dataJsonDefault.default[1]).init();
-_chart.chart(document.getElementById("chart3"), _dataJsonDefault.default[2]).init();
-_chart.chart(document.getElementById("chart4"), _dataJsonDefault.default[3]).init();
-_chart.chart(document.getElementById("chart5"), _dataJsonDefault.default[4]).init();
 _modeSwitcher.modeSwithcer(document.getElementById("mode_switcher"));
+_chart.chart(document.getElementById("chart_1"), _dataJsonDefault.default[0]).init();
+_chart.chart(document.getElementById("chart_2"), _dataJsonDefault.default[1]).init();
+_chart.chart(document.getElementById("chart_3"), _dataJsonDefault.default[2]).init();
+_chart.chart(document.getElementById("chart_4"), _dataJsonDefault.default[3]).init();
+_chart.chart(document.getElementById("chart_5"), _dataJsonDefault.default[4]).init();
 
 },{"./modeSwitcher":"3XciW","./chart":"1b3aX","./data.json":"2JbJW","./styles.scss":"1ApLC","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3XciW":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
@@ -553,35 +553,25 @@ const VIEW_HEIGHT = DPI_HEIGHT - PADDING * 2;
 const ROWS_COUNT = 5;
 function chart(root, data) {
   let raf;
-  root.innerHTML = `<div data-el="tooltip" class="tg-chart-tooltip"></div>
-    <canvas data-el="main"></canvas>
-    <div class="tg-chart-slider" data-el="slider">
-        <canvas></canvas>
-        <div data-el="left" class="tg-chart-slider__left">
-            <div
-                class="tg-chart-slider__arrow--left"
-                data-el="arrow"
-                data-type="left"
-            ></div>
+  root.innerHTML = `
+        <div data-el="tooltip" class="chart-tooltip"></div>
+        <canvas data-el="main"></canvas>
+        <div class="chart-slider" data-el="slider">
+            <canvas></canvas>
+            <div data-el="left" class="chart-slider__left">
+                <div class="chart-slider__arrow--left" data-el="arrow" data-type="left"></div>
+            </div>
+            <div data-el="window" data-type="window" class="chart-slider__window"></div>
+            <div data-el="right" class="chart-slider__right">
+                <div class="chart-slider__arrow--right" data-el="arrow" data-type="right"></div>
+            </div>
         </div>
-        <div
-        data-el="window"
-        data-type="window"
-        class="tg-chart-slider__window"
-        ></div>
-        <div data-el="right" class="tg-chart-slider__right">
-            <div
-                class="tg-chart-slider__arrow--right"
-                data-el="arrow"
-                data-type="right"
-            ></div>
-        </div>
-    </div>
-    <div id="tg-chart-checkbox-container"></div>`;
+        <div id="chart-checkbox-container"></div>
+    `;
   const canvas = root.querySelector("[data-el='main']");
   const tip = _tooltip.tooltip(root.querySelector("[data-el='tooltip']"), data);
   const slider = _slider.sliderChart(root.querySelector("[data-el='slider']"), DPI_WIDTH);
-  const checkBox = _checkboxes.checkBoxes(root.querySelector("#tg-chart-checkbox-container"), data);
+  const checkBox = _checkboxes.checkBoxes(root.querySelector("#chart-checkbox-container"), data);
   const ctx = canvas.getContext("2d");
   canvas.width = DPI_WIDTH;
   canvas.height = DPI_HEIGHT;
@@ -729,15 +719,17 @@ _parcelHelpers.export(exports, "tooltip", function () {
 });
 var _utils = require("./utils");
 const template = data => `
-  <div class="tooltip-title">${data.title}</div>
-  <ul class="tooltip-list">
-    ${data.items.map(item => {
-  return `<li class="tooltip-list-item">
-        <div class="value" style="color: ${item.color}">${item.value}</div>
-        <div class="name" style="color: ${item.color}">${item.name}</div>
-      </li>`;
-}).join('\n')}
-  </ul>
+    <div class="tooltip-title">${data.title}</div>
+    <ul class="tooltip-list">
+        ${data.items.map(item => {
+  return `
+                    <li class="tooltip-list-item">
+                        <div class="value" style="color: ${item.color}">${item.value}</div>
+                        <div class="name" style="color: ${item.color}">${item.name}</div>
+                    </li>
+                `;
+}).join("\n")}
+    </ul>
 `;
 function tooltip(el) {
   const clear = () => el.innerHTML = "";
@@ -879,7 +871,7 @@ var _utils = require("./utils");
 function noop() {}
 function sliderChart(root, DPI_WIDTH) {
   const WIDTH = DPI_WIDTH / 2;
-  const MIN_WIDTH = WIDTH * .05;
+  const MIN_WIDTH = WIDTH * 0.05;
   let nextFn = noop;
   const $left = root.querySelector("[data-el='left']");
   const $window = root.querySelector("[data-el='window']");
@@ -930,7 +922,7 @@ function sliderChart(root, DPI_WIDTH) {
     document.onmousemove = null;
   };
   root.addEventListener("mousedown", mousedown);
-  const defaultWidth = WIDTH * .3;
+  const defaultWidth = WIDTH * 0.3;
   setPosition(0, WIDTH - defaultWidth);
   function setPosition(left, right) {
     const w = WIDTH - right - left;
@@ -1015,7 +1007,7 @@ function checkBoxes(root, data) {
             <span>${data.names[key]}</span>
         `;
     let checkBox = document.createElement("div");
-    checkBox.classList.add("tg-chart-checkbox");
+    checkBox.classList.add("chart-checkbox");
     checkBox.innerHTML = template;
     checkBox.addEventListener("click", checkBoxClick);
     checkBoxClick.apply(checkBox);
